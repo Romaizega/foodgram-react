@@ -1,14 +1,14 @@
-# WEB-приложение "Foodgram"
-### для просмотра и публикации рецептов
+# WEB-app "Foodgram"
+### for viewing and publishing recipes
 
-Возможности приложения:
+Features of the application:
 
-- публиковать свои рецепты
-- добавлять чужие рецепты в избранное
-- подписываться на публикации других авторов
-- добавлять рецепты в корзины и скачивать список ингредиентов в PDF файле
+- Publish your own recipes  
+- Add others' recipes to favorites  
+- Follow publications from other authors  
+- Add recipes to shopping carts and download the ingredient list as a PDF file  
 
-## Стек технологий
+## Technology stack:
  [![Python](https://img.shields.io/badge/-Python-464646?style=flat&logo=Python&logoColor=e8b600&color=065535)](https://docs.python.org/release/3.9.10)
 
  [![Django](https://img.shields.io/badge/-Django-464646?style=flat&logo=Django&logoColor=56C0C0&color=065535 )](https://www.djangoproject.com/)
@@ -16,21 +16,21 @@
  [![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-464646?style=flat&logo=PostgreSQL&logoColor=56C0C0&color=3d85c6)](https://www.postgresql.org/)
 
 
-### Рекомендации по развертыванию проекта локально
+### Recommendations for deploying the project locally
 
-Клонируем проект:
+Clone the project:
 
 ```bash
 git clone https://github.com/Romaizega/foodgram-project-react.git
 ```
 
-Переходим в папку с проектом:
+Navigate to the project folder:
 
 ```bash
 cd foodgram-project-react.git
 ```
 
-Установить виртуальное окружение:
+Install a virtual environment:
 
 linux
 ```bash
@@ -40,7 +40,7 @@ windows
 ```bash
 python -m venv venv
 ```
-Активировать виртуальное окружение:
+Activate the virtual environment:
 
 linux
 ```bash
@@ -50,7 +50,7 @@ windows
 ```bash
 source venv/Script/activate
 ```
-Установить зависимости:
+Install dependencies:
 
 linux
 ```bash
@@ -64,8 +64,8 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-+ Установить локально [Docker compose](https://www.docker.com/)
-+ Создать файлы .env в папках backend и infra-dev 
++ Install locally. [Docker compose](https://www.docker.com/)
++ Create `.env` files in the `backend` and `infra-dev` folders
 ```
 POSTGRES_USER=foodgram_user
 POSTGRES_DB=django
@@ -75,7 +75,7 @@ SECRET_KEY=(SECRET_KEY)
 ALLOWED_HOSTS=(ALLOWED_HOSTS)
 DEBUG=False
 ```
-+ Запустить проект через `docker compose up`:
++ Run the project using `docker compose up`:
 ```shell script
 cd foodgram-project-react/infta-dev
 ```
@@ -85,7 +85,7 @@ docker compose  up --build
 ```
 
 
-+ Запустить backend сервер:
++Run the backend server:
 ```shell script
 cd backend/
 ```
@@ -98,24 +98,24 @@ python manage.py runserver
 ```shell script
 python manage.py createsuperuser
 ```
-Документация доступна по адресу http://localhost/api/docs/ 
+Documentation is available at the following address http://localhost/api/docs/ 
 
 
-### Рекомендации по развертыванию проекта на сервере
+### Recommendations for deploying the project on a server:
 
-Очистите кеш npm
+Clear the npm cache
 ```shell script
 npm cache clean --force
 ```
-Очистите кеш APT
+Clear the APT cache
 ```shell script
 sudo apt clean
 ```
-Очистите старые системные логи
+Clear old system logs
 ```shell script
  sudo journalctl --vacuum-time=1d
 ```
-Устанавливаем Docker Compose 
+Install Docker Compose 
 ```shell script
 sudo apt update
 sudo apt install curl
@@ -123,7 +123,7 @@ curl -fSL https://get.docker.com -o get-docker.sh
 sudo sh ./get-docker.sh
 sudo apt install docker-compose-plugin
 ```
-Настроить `Nginx` на сервере:
+Configure Nginx on the server:
 ```shell script
 sudo apt install nginx -y
 ```
@@ -136,7 +136,7 @@ sudo systemctl start nginx
 sudo nano /etc/nginx/sites-enabled/default
 ```
 
-+ Добавить конфигурации:
++ Add configurations:
 ```
 server {
     server_name <your-ip> <your-domen>;
@@ -156,13 +156,13 @@ sudo nginx -t
 sudo service nginx reload
 ```
 
-+ Проверить работоспособность:
++ Check functionality:
 ```shell script
 sudo systemctl status nginx
 ```
 
-Получить `SSl` сертификат:
-+ Настраить `Firewall`:
+Obtain an `SSL` certificate:
++ Configure `Firewall`:
 ```shell script
 sudo ufw allow 'Nginx Full'
 ```
@@ -174,29 +174,29 @@ sudo ufw allow OpenSSH
 ```shell script
 sudo ufw enable
 ```
-Работа с директорией на удаленном сервере:
-+ Создать директорию:
+Working with the directory on the remote server:
++ Create a directory:
 ```shell script
 mkdir foodgram/
 ```
-+ Создать директорию внутри `foodgram`:
++ Create a directory inside: `foodgram`:
 ```shell script
 mkdir infra/
 ```
 
-+ Создать `.env`, `docker-compose.production.yml`, `nginx.conf` в директории `foodgram/infra/`:
++ Create `.env`, `docker-compose.production.yml`, `nginx.conf` in the directory `foodgram/infra/`:
 
 
-+ Перейти в директорию:
++ Navigate to the directory:
 ```shell script
 cd foodgram/infra/
 ```
-Запуск проекта на сервере:
-+ Запустить `Docker` контейнеры:
+Starting the project on the server:
++ Starting `Docker` containers:
 ```shell script
 scp -i sudo docker compose -f docker-compose.production.yml up -d
 ```
-+ Настроить `Backend`:
++ Configure `Backend`:
 ```shell script
 sudo docker compose -f docker-compose.production.yml exec backend python manage.py migrate
 ```
@@ -213,22 +213,22 @@ sudo docker compose -f docker-compose.production.yml exec backend cp -r /app/col
 sudo docker compose -f docker-compose.production.yml exec backend python manage.py createsuperuser
 ```
 
-+ Загрузить список ингредиентов в базу данных:
++ Upload the list of ingredients to the database:
 ```shell script
 sudo docker compose -f docker-compose.production.yml exec backend python manage.py load_ingredients
 ```
 
-+ Проверить, что контейнеры работают:
++ Check that the containers are running:
 ```shell script
 scp -i sudo docker compose -f docker-compose.production.yml ps
 ```
 
 
-### Доступ к проекту:
+### Access to the project:
 
 [![FOODGRAM](https://img.shields.io/badge/-FOODGRAM-000000?style=flat&color=008080)](https://foodgramenjoy.ddns.net)
 
 
 
-### Автор:
-[Р.Г. Изегов](https://github.com/Romaizega)
+### Author:
+[Roman Izegov](https://github.com/Romaizega)
